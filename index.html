@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="canonical" href="https://letswritetw.github.io/letswrite-food-check/" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+
+	<title>午餐吃什麼 - Augustus - Let's Write</title>
+
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css'/>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'/>
+	<link rel="stylesheet" href="assets/css/main.css">
+
+</head>
+<body>
+
+	<!--  背景圖  -->
+	<main class="full-block">
+		
+		<!--  主要內容  -->
+		<div class="main-block">
+			
+			<!--  顯示區塊  -->
+			<section class="god">
+				<h1>
+					<span class="wrap">
+						<span>到底誰</span>
+					</span>
+				</h1>
+			</section>
+            <section class="god">
+				<h1>
+					<span class="wrap2">
+						<span>會被選中呢？</span>
+					</span>
+				</h1>
+			</section>
+
+			<!--  按鈕  -->
+			<section class="btns">
+
+				<!--  start  -->
+				<a class="btn-start" href="#">
+					<span class="line top -h"></span>
+					<span class="line right -v"></span>
+					<span class="line bottom -h"></span>
+					<span class="line left -v"></span>
+				</a>
+			</section>
+		</div>
+	</main>
+
+	<!--  github link  -->
+<!--
+	<div class="github">
+		<a href="https://github.com/sam70229">
+			<i class="fa fa-github" aria-hidden="true"></i>
+		</a>
+	</div>
+-->
+
+	<script>
+		const duration = 2000; // 拉霸效果執行多久
+        let type = ['鞋子顏色','衣服顏色','褲子顏色', '幾月生日', '生日日期尾數', '戴眼鏡的人', '戴牙套的人', '頭髮長度', '頭髮顏色', '戴手錶的人', '手機系統', '身分證開頭']; // 素
+        let attr = {
+            '鞋子顏色': ['黑', '白', '灰', '藍', '綠', '咖啡', '紅', '紫', '米色'],
+            '衣服顏色': ['黑', '白', '灰', '藍', '綠', '咖啡', '紅', '紫', '米色'],
+            '褲子顏色': ['黑', '白', '灰', '藍', '綠', '咖啡', '紅', '紫', '米色'],
+            '幾月生日': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+            '生日日期尾數': ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+            '戴眼鏡的人': ['有', '沒有'],
+            '戴牙套的人': ['有', '沒有'],
+            '頭髮長度': ['長', '短'],
+            '頭髮顏色': ['黑', '白', '灰', '藍', '綠', '咖啡', '紅', '紫', '米色'],
+            '戴手錶的人': ['有', '沒有'],
+            '手機系統': ['iOS', 'Android'],
+            '身分證開頭': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Z"]   
+        }; // 葷
+
+        // 點擊按鈕後執行
+        let r; // 亂數
+        let max, min; // 陣列的最大、小值
+        let txt; // 結果
+
+
+        // 按鈕
+        const btn = document.querySelector('.btn-start');
+
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+
+            const t = "";
+            // 選店家 fn
+            const chooseShop = (toggle, c, callback) => {
+                console.log(toggle, c);
+                // 取亂數 fn
+                r = () => {
+                    max = toggle.length - 1;
+                    min = 0;
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                };
+
+                // 清空、插入選項
+                let input = document.querySelector(c);
+                input.innerHTML = '';
+                for(let i = 0; i < toggle.length; i++) {
+                    input.insertAdjacentHTML('beforeend', '<span>' + toggle[i] + '</span>');
+                }
+
+                // 禁止按鈕再被點擊
+                e.target.classList.add('not-allow');
+
+                // 加入動畫 class name
+                const list = document.querySelectorAll(`${c} > span`);
+                Array.prototype.forEach.call(list, l => l.classList.add('span-' + (toggle.length - 1)));
+
+                // 亂數決定中選店家
+                txt = toggle[r()];
+                list[0].innerText = txt;
+
+                // 移除動畫
+                setTimeout(() => {
+                    // 停止拉霸動畫
+                    Array.prototype.forEach.call(list, l => l.removeAttribute('class'));
+                    
+//                    setTimeout(() => {
+//                        var toggle2 = attr[txt];
+//                        r = () => {
+//                            max = toggle2.length - 1;
+//                            min = 0;
+//                            return Math.floor(Math.random() * (max - min + 1)) + min;
+//                        };
+//                        console.log(toggle2);
+//
+//                        // 清空、插入選項
+//                        let input2 = document.querySelector('.wrap2');
+//                        console.log(input2);
+//                        input2.innerHTML = '';
+//                        for(let i = 0; i < toggle2.length; i++) {
+//                            input2.insertAdjacentHTML('beforeend', '<span>' + toggle2[i] + '</span>');
+//                        }
+//
+//                        // 禁止按鈕再被點擊
+//                        e.target.classList.add('not-allow');
+//
+//                        // 加入動畫 class name
+//                        const list2 = document.querySelectorAll('.wrap2 > span');
+//                        Array.prototype.forEach.call(list2, l2 => l2.classList.add('span-' + (toggle2.length - 1)));
+//
+//                        // 亂數決定中選店家
+//                        txt2 = toggle2[r()];
+//                        list2[0].innerText = txt2;
+//                        console.log(txt2);
+//                    
+//                        Array.prototype.forEach.call(list2, l2 => l2.removeAttribute('class'));
+//                        
+//                    }, duration);
+                    callback();
+                    e.target.classList.remove('not-allow');
+
+                }, duration);
+
+            };
+
+            //開始執行
+            chooseShop(type, '.wrap', function() {
+                const l = document.querySelectorAll(`.wrap > span`);
+                console.log(l[0].innerText);
+                chooseShop(attr[l[0].innerText], '.wrap2', );           
+            });
+            
+        });
+	</script>
+</body>
+</html>
